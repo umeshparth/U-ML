@@ -3,9 +3,9 @@ import pandas as pd
 import pickle
 
 # Load the model and scaler
-with open('https://github.com/umeshparth/U-ML/blob/5dbf74b91e79756491c57744f1824cc2914a6bc9/best_model.pkl', 'rb') as f:
+with open('pkl/best_model.pkl', 'rb') as f:
     model = pickle.load(f)
-with open('scaler.pkl', 'rb') as f:
+with open('pk1/scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
 
 # Streamlit app
