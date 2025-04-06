@@ -147,7 +147,7 @@ st.markdown('<div class="subtitle">Assess loan applications with precision and e
 
 # Sidebar for instructions or branding
 with st.sidebar:
-    st.image("UVRBank.png", use_container_width =True)  # Replace with actual bank logo URL
+    st.image("UVRBank.png")  # Replace with actual bank logo URL
     st.write("### Instructions")
     st.write("Enter the applicant’s details below to predict loan approval status. Ensure all fields are filled accurately.")
     st.write("---")
