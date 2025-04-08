@@ -166,8 +166,23 @@ st.markdown("""
     /* Multi-column input layout */
     .input-row {
         display: flex;
-        justify-content: space-between;
-        margin-bottom: 5px;
+        # Gauge Chart: Confidence Level with fixed width
+         fig_gauge = go.Figure(go.Indicator(
+             mode="gauge+number",
+-            value=latest_prediction["confidence"] * 100,
++            value=latest_prediction["confidence"] * 100,
++            domain={'x': [0, 1], 'y': [0, 1]},
++            title={'text': "Confidence"},
++            gauge={'axis': {'range': [0, 100]},
++                   'bar': {'color': "#4a9a9a"},
++                   'steps': [
++                       {'range': [0, 50], 'color': "#d1e0e0"},
+             domain={'x': [0, 1], 'y': [0, 1]},
+             title={'text': "Confidence"},
+             gauge={'axis': {'range': [0, 100]},    
+            {'range': [75, 100], 'color': "#b0d0d0"}],
+                    'threshold': {'line': {'color': "red", 'width': 4}, 'value': 60}},
+             number={'font': {'size': 20}}
     }
     .input-row .stTextInput, .input-row .stNumberInput, .input-row .stSelectbox {
         flex: 1;
@@ -303,7 +318,7 @@ with graph_col:
                    'threshold': {'line': {'color': "red", 'width': 4}, 'value': 60}},
             number={'font': {'size': 20}}
         ))
-        fig_gauge.update_layout(height=180, margin=dict(l=10, r=30, t=30, b=10))
+        fig_gauge.update_layout(width=300, height=180, margin=dict(l=10, r=30, t=30, b=10), autosize=False)
         st.plotly_chart(fig_gauge)
 
 # Footer
