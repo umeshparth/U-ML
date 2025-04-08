@@ -21,7 +21,7 @@ except Exception as e:
     st.error(f"Error loading files: {str(e)}")
     st.stop()
 
-# Custom CSS with fixed width for gauge chart
+# Custom CSS with larger fonts and no header
 st.markdown("""
     <style>
     .stApp {
@@ -43,49 +43,73 @@ st.markdown("""
         z-index: 1;
     }
     .simple-text h1 {
-        font-size: 36px;
+        font-size: 36px; /* Very large font */
         margin: 0;
         font-weight: 700;
         letter-spacing: 1px;
     }
     .simple-text p {
-        font-size: 24px;
+        font-size: 24px; /* Very large font */
         margin: 2px 0 0 0;
         font-style: italic;
         opacity: 0.9;
     }
     .stButton>button {
-        background-color: #2e7d7d;
+        background-color: #362479;
         color: white;
         border-radius: 6px;
-        font-size: 22px;
+        font-size: 22px; /* Very large font */
         padding: 10px 20px;
         width: 100%;
         transition: background-color 0.3s;
     }
     .stButton>button:hover {
-        background-color: #4a9a9a;
+        background-color: ##241852;
     }
+        .title {
+        font-size: 32px;
+        color: #ffffff; /* Bank-like navy blue */
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .subtitle {
+        font-size: 18px;
+        color: #555555;
+        text-align: center;
+        margin-bottom: 20px;
+    }    
+    .title {
+        font-size: 32px;
+        color: #362479; /* Bank-like navy blue */
+        text-align: left;
+        margin-bottom: 10px;
+    }
+    .subtitle {
+        font-size: 18px;
+        color: #555555;
+        text-align: left;
+        margin-bottom: 20px;
+    }        
     .stTextInput, .stNumberInput, .stSelectbox {
         border: 1px solid #b0c4de;
         border-radius: 4px;
-        padding: 8px;
+        padding: 8px; /* Larger padding */
         margin: 2px 0;
         background-color: #ffffff;
-        font-size: 18px;
+        font-size: 18px; /* Very large font */
     }
     .input-group {
         background-color: #f0f4f8;
-        padding: 12px;
+        padding: 12px; /* Larger padding */
         border-radius: 6px;
         box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         margin-bottom: 8px;
     }
     .input-group > div {
-        font-size: 22px;
+        font-size: 22px; /* Very large font */
         color: #2e7d7d;
     }
-    /* Animated Outcome with status-based colors */
+   /* Animated Outcome with status-based colors */
     .animated-outcome {
         border-radius: 6px;
         padding: 15px;
@@ -111,14 +135,14 @@ st.markdown("""
     .animated-outcome.not-approved:hover {
         background-color: #ffcccc;
         box-shadow: 0 0 10px #F44336;
-    }
+    }        
     @keyframes highlight {
-        0% { box-shadow: 0 0 0; }
-        50% { box-shadow: 0 0 10px; }
-        100% { box-shadow: 0 0 0; }
+        0% { background-color: #e0f0f0; box-shadow: 0 0 0 #2e7d7d; }
+        50% { background-color: #c0e0e0; box-shadow: 0 0 10px #2e7d7d; }
+        100% { background-color: #e0f0f0; box-shadow: 0 0 0 #2e7d7d; }
     }
-    /* Custom Layout with fixed width */
-    .ui-column {
+    /* Custom Layout */
+   .ui-column {
         width: 70% !important;
         padding: 0 10px;
         float: left;
@@ -148,7 +172,7 @@ st.markdown("""
     .input-row .stTextInput, .input-row .stNumberInput, .input-row .stSelectbox {
         flex: 1;
         margin-right: 5px;
-        font-size: 18px;
+        font-size: 18px; /* Very large font */
     }
     .input-row .stTextInput:last-child, .input-row .stNumberInput:last-child, .input-row .stSelectbox:last-child {
         margin-right: 0;
@@ -159,65 +183,56 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Simple text instead of header
-st.markdown('<div class="simple-text">', unsafe_allow_html=True)
-st.markdown("""
-    <h1>Bank Loan Approval</h1>
-    <p>Quick & Precise Decision Making</p>
-""", unsafe_allow_html=True)
-st.markdown('</div>', unsafe_allow_html=True)
 
-# Sidebar
+# Header
+st.markdown('<div class="title">Bank Loan Approval Prediction</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Assess loan applications with precision and efficiency</div>', unsafe_allow_html=True)
+
+# Sidebar for instructions or branding
 with st.sidebar:
+    st.image("UVRBank.png")  # Replace with actual bank logo URL
     st.write("### Instructions")
-    st.write("Enter applicant details below for loan approval prediction. Ensure accuracy in all fields.")
+    st.write("Enter the applicant’s details below to predict loan approval status. Ensure all fields are filled accurately.")
     st.write("---")
-    st.write("**Support**: support@bankname.com")
+    st.write("**Contact Support**: support@bankname.com")
+
 
 # Main content with custom layout
-ui_col, graph_col = st.columns([0.7, 0.3], gap="small")
+ui_col, graph_col = st.columns([0.7, 0.2], gap="small")
 
 with ui_col:
     # Compact UI with multi-column rows and new labels
     with st.container():
         with st.container():
-            st.markdown('<div class="input-group">', unsafe_allow_html=True)
-            st.write("Applicant Details")
-            col1, col2 = st.columns(2)
+            st.write("### Personal Details")
+            col1, col2, col3, col4 = st.columns(4)
             with col1:
                 full_name = st.text_input("Full Name", value="John Doe", help="Applicant’s full name")
             with col2:
                 phone = st.text_input("Phone", value="9876543210", help="10-digit phone number")
-            col3, col4 = st.columns(2)
             with col3:
                 edu_level = st.selectbox("Education", ['Graduate', 'Non-Graduate'], help="Educational background")
             with col4:
                 emp_status = st.selectbox("Employment", ['Yes', 'No'], help="Self-employed status")
-            st.markdown('</div>', unsafe_allow_html=True)
         
         with st.container():
-            st.markdown('<div class="input-group">', unsafe_allow_html=True)
-            st.write("Loan Details")
+            st.write("### Loan Details")
             col1, col2 = st.columns(2)
             with col1:
                 loan_value = st.number_input("Loan Value (INR)", min_value=0.0, value=200000.0, step=10000.0, format="%.2f", help="Loan amount")
             with col2:
                 duration = st.number_input("Duration (Years)", min_value=1, max_value=30, value=10, help="Loan term")
-            st.markdown('</div>', unsafe_allow_html=True)
-
+            
         with st.container():
-            st.markdown('<div class="input-group">', unsafe_allow_html=True)
-            st.write("Financial Profile")
+            st.write("### Financial Profile")
             col1, col2 = st.columns(2)
             with col1:
                 yearly_income = st.number_input("Income (INR)", min_value=0.0, value=500000.0, step=10000.0, format="%.2f", help="Annual income")
             with col2:
                 credit_rate = st.number_input("Credit Score", min_value=300, max_value=900, value=750, help="Credit rating")
-            st.markdown('</div>', unsafe_allow_html=True)
-
+            
         with st.container():
-            st.markdown('<div class="input-group">', unsafe_allow_html=True)
-            st.write("Asset Holdings")
+            st.write("### Asset Holdings")
             col1, col2, col3, col4 = st.columns(4)
             with col1:
                 home_value = st.number_input("Home Value (INR)", min_value=0.0, value=300000.0, step=10000.0, format="%.2f", help="Residential value")
@@ -227,8 +242,7 @@ with ui_col:
                 lux_value = st.number_input("Luxury Value (INR)", min_value=0.0, value=200000.0, step=10000.0, format="%.2f", help="Luxury assets")
             with col4:
                 bank_funds = st.number_input("Bank Funds (INR)", min_value=0.0, value=100000.0, step=10000.0, format="%.2f", help="Bank assets")
-            st.markdown('</div>', unsafe_allow_html=True)
-
+            
         # Predict button
         if st.button("Predict Loan Status"):
             input_data = pd.DataFrame({
@@ -274,29 +288,7 @@ with graph_col:
         else:
             st.write("**Note**: Review details for improvement.")
 
-        # Compact visualizations
-        # Bar Chart: Prediction History
-        history_df = pd.DataFrame(st.session_state.prediction_history)
-        fig_bar = px.bar(history_df.tail(5), x='timestamp', color='status',
-                        title="Recent Approvals",
-                        color_discrete_map={'Approved': '#4CAF50', 'Not Approved': '#F44336'},
-                        height=180)
-        fig_bar.update_layout(xaxis_title="", yaxis_title="", bargap=0.1, margin=dict(l=10, r=10, t=30, b=10))
-        st.plotly_chart(fig_bar)
-
-        # Pie Chart: Feature Contribution
-        feature_data = pd.DataFrame({
-            'Feature': ['Education (Graduate)', 'Self-Employed (No)'],
-            'Value': [1 if edu_level == 'Graduate' else 0, 1 if emp_status == 'No' else 0]
-        })
-        fig_pie = px.pie(feature_data, names='Feature', values='Value',
-                        title="Feature Impact",
-                        color_discrete_sequence=px.colors.qualitative.Pastel,
-                        height=180)
-        fig_pie.update_traces(textinfo='percent+label')
-        st.plotly_chart(fig_pie)
-
-        # Gauge Chart: Confidence Level with fixed width
+        # Gauge Chart: Confidence Level
         fig_gauge = go.Figure(go.Indicator(
             mode="gauge+number",
             value=latest_prediction["confidence"] * 100,
@@ -311,12 +303,7 @@ with graph_col:
                    'threshold': {'line': {'color': "red", 'width': 4}, 'value': 60}},
             number={'font': {'size': 20}}
         ))
-        fig_gauge.update_layout(
-            width=300,  # Fixed width to prevent expansion
-            height=180,
-            margin=dict(l=10, r=10, t=30, b=10),
-            autosize=False  # Disable autosizing to enforce fixed dimensions
-        )
+        fig_gauge.update_layout(height=180, margin=dict(l=10, r=30, t=30, b=10))
         st.plotly_chart(fig_gauge)
 
 # Footer
