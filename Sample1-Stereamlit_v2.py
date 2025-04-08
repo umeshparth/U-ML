@@ -2,9 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 import pickle
-import plotly.express as px
 import plotly.graph_objects as go
-import base64
 from datetime import datetime
 
 # Set page configuration with fixed height to avoid scrolling
